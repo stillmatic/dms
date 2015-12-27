@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from locations.models import Checkin
+from checkins.models import Checkin
 
 class CheckinSerializer(serializers.ModelSerializer):
     class Meta:
