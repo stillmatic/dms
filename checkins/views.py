@@ -9,9 +9,12 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 
 class CheckinList(generics.ListCreateAPIView):
-    queryset = Checkin.objects.all()
+    #queryset = Checkin.objects.all()
     serializer_class = CheckinSerializer
-    permission_classes = (permissions.IsAdminUser, IsOwner)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        return Checkin.objects.filter(check_user=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(check_user=self.request.user)
@@ -23,9 +26,10 @@ class CheckinDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class UserList(generics.ListAPIView):
-    queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (permissions.IsAdminUser, IsOwner)
+    permission_classes = (permissions.IsAuthenticated,)
+    def get_queryset(self):
+        return User.objects.filter(username=self.request.user)
 
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
