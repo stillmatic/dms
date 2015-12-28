@@ -19,7 +19,7 @@ import checkins.urls
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^', include(checkins.urls))
+    url(r'^api/', include(checkins.urls))
 ]
 
 urlpatterns += [

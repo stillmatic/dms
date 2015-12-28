@@ -11,8 +11,7 @@ from rest_framework.reverse import reverse
 class CheckinList(generics.ListCreateAPIView):
     queryset = Checkin.objects.all()
     serializer_class = CheckinSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-        IsOwner)
+    permission_classes = (permissions.IsAdminUser, IsOwner)
 
     def perform_create(self, serializer):
         serializer.save(check_user=self.request.user)
@@ -20,17 +19,19 @@ class CheckinList(generics.ListCreateAPIView):
 class CheckinDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Checkin.objects.all()
     serializer_class = CheckinSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-        IsOwner)
+    permission_classes = (permissions.IsAdminUser, IsOwner)
 
 
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = (permissions.IsAdminUser, IsOwner)
 
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = (permissions.IsAdminUser, IsOwner)
+
 
 @api_view(('GET',))
 def api_root(request, format=None):
